@@ -1,4 +1,4 @@
-N = 20; % N
+N = 3; % N
 
 % initialize b to g(xij,  yij)
 h = 1/(N+1);
@@ -17,8 +17,8 @@ for j = 1:N
     for i = 1:N
         % 
         %    B I 0           4 1 0
-        % A= I B I where B = 1 4 1 , I is I3x3 identity matrix and
-        %    0 I B           0 1 4   0 is 03x3 zero matrix
+        % A= I B I where B = 1 4 1 , I is 3x3 negative identity matrix and
+        %    0 I B           0 1 4   0 is 3x3 zero matrix
         % we use this to get 
         % 4ui;j - ui+1;j - ui-1;j - ui;j+1 - ui;j-1
         % fill in identity matrices on the side diagonals
@@ -40,6 +40,9 @@ for j = 1:N
         
     end
 end
+
+fmt = [repmat('%4d ', 1, size(A,2)-1), '%4d\n'];
+fprintf(fmt, A.');   %transpose is important
 
 atol = 1e-3; % absolute tolerance
 programTimeLimit = 50; % runtime limit in seconds

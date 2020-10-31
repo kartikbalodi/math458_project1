@@ -29,7 +29,7 @@ for j = 1:N
     for i = 1:N
         % 
         %    B I 0           4 1 0
-        % A= I B I where B = 1 4 1 , I is I3x3 identity matrix and
+        % A= I B I where B = 1 4 1 , I is 3x3 negative identity matrix and
         %    0 I B           0 1 4   0 is 03x3 zero matrix
         % we use this to get 
         % 4ui;j - ui+1;j - ui-1;j - ui;j+1 - ui;j-1
