@@ -22,6 +22,7 @@ for j = 1:N
         % we use this to get 
         % 4ui;j - ui+1;j - ui-1;j - ui;j+1 - ui;j-1
         % fill in identity matrices on the side diagonals
+        c = (j-1)*N;
         if j > 1
             A(c+i-N, c+i) = -1;
         end
@@ -29,7 +30,6 @@ for j = 1:N
             A(c+i+N, c+i) = -1;
         end
         % then fill in B
-        c = (j-1)*N;
         A(c+i,c+i)= 4;
         if i ~= 1
             A(c+i, c+i-1) = -1;
