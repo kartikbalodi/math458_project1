@@ -45,17 +45,15 @@ for j = 1:N
 end
 
 
-%Range of possible omega values by 0.01 step
-x_init = zeros(length(A));
-omega = 0:0.01:2.0;
-iter_nums = zeros(length(omega));
 
 
 
 %Stopping Conditions: a tolerance limit and max number of iterations
 %before quitting
 tolerance = 1e-3;
-max_iterations = 10000;
+max_iterations = 100000;
+omega = 0.01:0.01:2;
+iters = zeros(length(omega), 1);
   
 %LDU Decomoposition of A
 %Isolates lower diagonal (below the main diagonal)
@@ -64,38 +62,38 @@ L = -tril(A, -1);
 D = diag(diag(A));
 %Isolates upper diagonal (above the main diagonal)
 U = -triu(A, 1);
-
+    
 %Creates initial solution array of zeros
-x = zeros(N^2);
-
+x0 = zeros(N^2, 1);
+xk = zeros(N^2, 1);
+r = norm(b - A*x0, 1);
+    
 %Stored in reference since it is used repeatedly
 %A in the equation Ax_i = b where x_i represents the currrent
 %estimation of x
 
-
-num_iterations = 0;
+    
 %Repeats until stopping criterion of iterations is met
-for j = 1:length(omega)
+for i = 1:length(omega)
     num_iterations = 0;
-    for i = 1:max_iterations
-        ref = (D - omega(j) * L);
+    while r > tolerance
         num_iterations = num_iterations + 1;
         %Solving the iteration step
-        x = mldivide(ref,((1-omega(j))*D+omega(j)*U)*x_init)+omega(j)*mldivide(ref,b);
-
+        ref = (D - omega(i) * L);
+        xk = mldivide(ref,((1-omega(i))*D+omega(i)*U)*x0)+omega(i)*mldivide(ref,b);
+        r = norm(b - A*xk, 1); 
+%         ref = (D - omega * L);
+%         xk = mldivide(ref,((1-omega)*D+omega*U)*x0)+omega*mldivide(ref,b);
+%         r = norm(b - A*xk, 1); 
         %Ends the loop if stopping criterion of tolerance is met
         %Tolerance is the max. acceptable distance between x and x_init
         %(previous estimate of x)
-        if norm(x - x_init) < tolerance
-            break;
-        end
         %x_init stores previous value of x
-        x_init = x;
+        x0 = xk;
     end
-    iter_nums(j) = num_iterations;
+    iters(i) = num_iterations;
 end
 
-    
-plot(omega, iter_nums)
+plot(omega, iters)
 xlabel("Values of Omega")
-ylabel("Number of Iterations Required to Solve")
+ylabel("Number of Iterations Required")
