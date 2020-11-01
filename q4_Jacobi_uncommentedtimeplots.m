@@ -61,12 +61,6 @@ end
 atol = 1e-3; % absolute tolerance
 programTimeLimit = 100; % runtime limit in seconds
 x0 = zeros(N^2, 1); % initial guess
-% test cases
-A = [7 3 1; 
-    3 10 2; 
-    1 2 15];
-b = [28 31 22]';
-x = [0 0 0]';
 r = norm(b - A *x0, 1); % initial residual (b-A*xk)
 xk = x0; % kth iteration
 iterCount = 0; % number of iterations completed
