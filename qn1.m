@@ -1,4 +1,4 @@
-N = 3; % N
+N = 10; % N
 
 % initialize b to g(xij,  yij)
 h = 1/(N+1);
@@ -43,7 +43,3 @@ end
 
 fmt = [repmat('%4d ', 1, size(A,2)-1), '%4d\n'];
 fprintf(fmt, A.');   %transpose is important
-
-atol = 1e-3; % absolute tolerance
-programTimeLimit = 50; % runtime limit in seconds
-x0 = zeros(N^2, 1); % initial guess

@@ -61,42 +61,12 @@ end
 atol = 1e-3; % absolute tolerance
 programTimeLimit = 100; % runtime limit in seconds
 x0 = zeros(N^2, 1); % initial guess
-% test cases
-A = [7 3 1; 
-    3 10 2; 
-    1 2 15];
-b = [28 31 22]';
-x = [0 0 0]';
 r = norm(b - A *x0, 1); % initial residual (b-A*xk)
 xk = x0; % kth iteration
 iterCount = 0; % number of iterations completed
 
-
-figure(1);
-ax = axes();
-hold(ax)
-xlabel(ax, 'iterations')
-ylabel (ax, 'residual')
-%title(ax,'residual against time/s and iteration/count')
-% ax_top = axes();
-% hold(ax_top)
-% ax_top.Position = ax.Position;
-% ax_top.YAxis.Visible = 'off';
-% ax_top.XAxisLocation = 'top';
-% xlabel(ax_top, 'time')
-
-tic
 % repeat iterations until r <= atol or program time limit reached
-while r > atol 
-    plot(ax,iterCount,r,'kx');
-    time = toc;
-%     plot(ax_top,time,r,'kx');
-    title(time)
-    if time > programTimeLimit
-        break
-    end
-    drawnow
-    
+while r > atol     
     % find the x in next iteration by given formula
     iterNext = zeros(N^2,1);
     for i = 1:N^2
@@ -112,14 +82,3 @@ while r > atol
     r = norm(b - A *xk, 1); % update residual
     iterCount = iterCount + 1; % increment iteration count
 end 
-% plot one more time for the last pt i.e. first r > atol
-plot(ax,iterCount,r,'kx');
-time = toc;
-% plot(ax_top,time,r,'kx');
-drawnow
-
-%hold(ax_top,'off')
-%hold(ax,'off')
-
-
-
