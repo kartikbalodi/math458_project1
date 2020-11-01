@@ -23,33 +23,25 @@ function x = conjGradMethod(A, b, x)
     
     % initialize p
     p = r;
-    % we need to use r'r for k and k+1, so keep track of both
-    old = r' * r;
-    new = old;
-   
+
     % n iterations
-    while(sqrt(old) >= tolerance)
-        % calculate old/p'Ap to avoid multiple calculations
-        oldpAp = old/(p' * A * p);
-        % x = x + ((p'r)/(p'Ap))p = x + ((r'r)/p'Ap)p
-        x = x + oldpAp * p;
-        r = r - oldpAp * A * p;
+    while(sqrt(r' * r) >= tolerance)
+        % calculate Ap and p' * Ap to avoid multiple calculations
+        Ap = A * p;
+        pAp = p' * Ap;
+        x = x + (r' * r)/(pAp) * p;
+        r = r - (p' * r)/(pAp)*Ap;
         
-        % new r'r, to use while we still need the old one
-        new = r' * r;
          % return if norm is less than tolerance already
-        if(sqrt(new) < tolerance)
+        if(sqrt(r' * r) < tolerance)
             % print out our answer
             fprintf('Result of conjugate gradient method: ');
             % x as our result (may switch to return value as needed)
             display(x);
             return;
         end
-        % p = r - ((r'Ap/p'Ap))p = r + new(r'r)/old(r'r) * p
-        p = r + (new/old) * p;
-        
-        % make sure to update our r'r
-        old = new;
+        % calculate our new p
+        p = r - (r'*Ap)/(pAp) * p;
 
     end
 end
