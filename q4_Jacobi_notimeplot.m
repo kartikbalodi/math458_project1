@@ -10,7 +10,7 @@
 %Start of qn(1) code
 %--------------------------------------------------------------------------
 
-N = 20; % N
+N = 40; % N
 
 % initialize b to g(xij,  yij)
 h = 1/(N+1);
@@ -85,7 +85,7 @@ while r > atol
     plot(ax,iterCount,r,'kx');
     time = toc;
 %     plot(ax_top,time,r,'kx');
-    title(time)
+    title(time);
     if time > programTimeLimit
         break
     end
@@ -111,6 +111,13 @@ plot(ax,iterCount,r,'kx');
 time = toc;
 % plot(ax_top,time,r,'kx');
 drawnow
+
+disp('N = ');
+disp(N);
+disp('time = ');
+disp(time);
+disp('iterations = ');
+disp(iterCount);
 
 %hold(ax_top,'off')
 %hold(ax,'off')

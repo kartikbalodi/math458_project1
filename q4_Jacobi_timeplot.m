@@ -10,7 +10,7 @@
 %Start of qn(1) code
 %--------------------------------------------------------------------------
 
-N = 30; % N
+N = 42; % N
 
 % initialize b to g(xij,  yij)
 h = 1/(N+1);
@@ -59,7 +59,7 @@ end
 
 % these are initializations which are used for every program
 atol = 1e-3; % absolute tolerance
-programTimeLimit = 150; % runtime limit in seconds
+programTimeLimit = 300; % runtime limit in seconds
 x0 = zeros(N^2, 1); % initial guess
 r = norm(b - A *x0, 1); % initial residual (b-A*xk)
 xk = x0; % kth iteration
@@ -111,6 +111,14 @@ plot(ax,iterCount,r,'kx');
 time = toc;
 plot(ax_top,time,r,'kx');
 drawnow
+
+disp('N = ');
+disp(N);
+disp('time = ');
+disp(time);
+disp('iterations = ');
+disp(iterCount);
+
 
 %hold(ax_top,'off')
 %hold(ax,'off')
