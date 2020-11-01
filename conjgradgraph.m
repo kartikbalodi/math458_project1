@@ -6,13 +6,7 @@
 % Gauss-Seidel with over-relaxation parameter (Saket)
 % Conjugate Gradient method (Heather)
 
-% Test from lecture to see if it works
-A = [7 3 1; 3 10 2; 1 2 15];
-b = [28 31 22]';
-x = [0 0 0]';
-x = conjGradMethod(A, b, x);
-
-N = 20; % N
+N = 149; % N
 
 % initialize b to g(xij,  yij)
 h = 1/(N+1);
@@ -62,12 +56,13 @@ conjGradMethod(A, b, x0)
 % Takes in matrix A, matrix b, and solves for our solution x
 function x = conjGradMethod(A, b, x)
     % use a variable for tolerance to easily change it
-    tolerance = 1e-12;
+    programTimeLimit = 150;
+    tolerance = 1e-3;
     figure(1);
     ax = axes();
-    hold(ax)
-    xlabel(ax, 'iterations')
-    ylabel (ax, 'residual')
+    hold(ax);
+    xlabel(ax, 'iterations');
+    ylabel (ax, 'residual');
     iterCount = 0;
     tic
     % initialize r to -1/2(gradient)
@@ -78,9 +73,14 @@ function x = conjGradMethod(A, b, x)
 
     % n iterations
     while(norm(r) >= tolerance)
-        plot(ax,iterCount,norm(r),'kx');
+        norm1 = norm(r);
+        plot(ax,iterCount,norm1,'kx');
         time = toc;
-        title(time)
+        title(time);
+        if time > programTimeLimit
+            disp('Program time limit '+programTimeLimit+' reached');
+            break
+        end
         drawnow()
         
         % calculate Ap and p' * Ap to avoid multiple calculations
@@ -92,9 +92,6 @@ function x = conjGradMethod(A, b, x)
          % return if norm is less than tolerance already
         if(sqrt(r' * r) < tolerance)
             % print out our answer
-            fprintf('Result of conjugate gradient method: ');
-            % x as our result (may switch to return value as needed)
-            display(x);
             return;
         end
         % calculate our new p
@@ -103,3 +100,6 @@ function x = conjGradMethod(A, b, x)
 
     end
 end
+
+
+
