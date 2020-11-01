@@ -72,20 +72,19 @@ hold(ax)
 xlabel(ax, 'iterations')
 ylabel (ax, 'residual')
 %title(ax,'residual against time/s and iteration/count')
-% ax_top = axes();
-% hold(ax_top)
-% ax_top.Position = ax.Position;
-% ax_top.YAxis.Visible = 'off';
-% ax_top.XAxisLocation = 'top';
-% xlabel(ax_top, 'time')
+ax_top = axes();
+hold(ax_top)
+ax_top.Position = ax.Position;
+ax_top.YAxis.Visible = 'off';
+ax_top.XAxisLocation = 'top';
+xlabel(ax_top, 'time')
 
 tic
 % repeat iterations until r <= atol or program time limit reached
 while r > atol 
     plot(ax,iterCount,r,'kx');
     time = toc;
-%     plot(ax_top,time,r,'kx');
-    title(time)
+    plot(ax_top,time,r,'kx');
     if time > programTimeLimit
         break
     end
@@ -109,7 +108,7 @@ end
 % plot one more time for the last pt i.e. first r > atol
 plot(ax,iterCount,r,'kx');
 time = toc;
-% plot(ax_top,time,r,'kx');
+plot(ax_top,time,r,'kx');
 drawnow
 
 %hold(ax_top,'off')
