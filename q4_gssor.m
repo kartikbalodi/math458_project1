@@ -1,4 +1,4 @@
-N = 125;
+N = 200;
 
 % initialize b to the value of g(xij,  yij)
 h = 1/(N+1);
